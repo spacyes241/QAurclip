@@ -30,10 +30,10 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectKey=spacyes241_QAurclip
-            -Dsonar.organization=spacyes241
-            -Dsonar.sources=lib
-            -Dsonar.tests=test
-            -Dsonar.dart.coverage.reportPaths=coverage/lcov.info
+        # with:
+        #   args: >
+        #     -Dsonar.projectKey=spacyes241_QAurclip
+        #     -Dsonar.organization=spacyes241
+        #     -Dsonar.sources=lib
+        #     -Dsonar.tests=test
+        #     -Dsonar.dart.coverage.reportPaths=coverage/lcov.info
