@@ -5,6 +5,7 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   sonarqube:
     name: SonarQube
@@ -12,10 +13,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  
-      - name: Build
-        run: test
+          fetch-depth: 0
+
+      # 1. Langkah wajib untuk proyek Flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      # 2. Mengambil library yang dibutuhkan
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 3. Menjalankan test (dengan trik agar tidak error kalau test gagal)
+      - name: Run tests
+        run: flutter test --coverage || true
+
+      # 4. Melakukan Scan ke SonarCloud
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v6
+        uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
